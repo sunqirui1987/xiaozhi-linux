@@ -1,0 +1,24 @@
+{
+    "idf.pythonInstallPath": "/opt/homebrew/bin/python3",
+    "files.associations": {
+        "iostream": "cpp",
+        "vector": "cpp"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/linxsdk/audio/include",
+        "${workspaceFolder}/linxsdk/http/include",
+        "${workspaceFolder}/linxsdk/json/include",
+        "${workspaceFolder}/linxsdk/log/include",
+        "${workspaceFolder}/linxsdk/opus/include",
+        "${workspaceFolder}/linxsdk/websocket/include",
+        "${workspaceFolder}/linxsdk/thirdparty/spdlog/include",
+        "${workspaceFolder}/linxsdk/thirdparty/nlohmann_json/include",
+        "/opt/homebrew/opt/libwebsockets/include",
+        "/opt/homebrew/opt/portaudio/include",
+        "/opt/homebrew/opt/opus/include",
+        "/opt/homebrew/opt/openssl/include"
+    ],
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++",
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.default.cppStandard": "c++17"
+}
