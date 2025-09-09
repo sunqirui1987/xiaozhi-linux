@@ -2,6 +2,18 @@
 
 一个跨平台的音频客户端项目，支持实时音频录制、播放和WebSocket通信。项目支持Linux（ALSA）和macOS（PortAudio）两个平台。
 
+## 文档导航
+
+- [快速开始指南](docs/quickstart.md) - 环境配置和基本使用
+- [API参考文档](docs/api-reference.md) - 完整的API接口说明
+- [模块文档](docs/modules/) - 各模块详细使用指南
+  - [音频模块](docs/modules/audio.md)
+  - [WebSocket模块](docs/modules/websocket.md)
+  - [Opus编解码](docs/modules/opus.md)
+  - [HTTP客户端](docs/modules/http.md)
+  - [日志系统](docs/modules/log.md)
+  - [文件流处理](docs/modules/filestream.md)
+
 ## 支持的平台
 
 - **Linux**: 使用ALSA音频系统
@@ -216,17 +228,7 @@ make run
    ./linx_app
    ```
 
-## 文档导航
 
-- [快速开始指南](docs/quickstart.md) - 环境配置和基本使用
-- [API参考文档](docs/api-reference.md) - 完整的API接口说明
-- [模块文档](docs/modules/) - 各模块详细使用指南
-  - [音频模块](docs/modules/audio.md)
-  - [WebSocket模块](docs/modules/websocket.md)
-  - [Opus编解码](docs/modules/opus.md)
-  - [HTTP客户端](docs/modules/http.md)
-  - [日志系统](docs/modules/log.md)
-  - [文件流处理](docs/modules/filestream.md)
 
 ## 许可证
 
