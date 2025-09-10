@@ -32,7 +32,7 @@ using namespace linx;
 
 // 服务器配置
 const std::string ota_url = "https://xrobo.qiniuapi.com/v1/ota/";  // OTA固件更新服务器地址
-const std::string ws_url = "wss://xrobo-io.qiniuapi.com/v1/ws?device-id=98%3Aa3%3A16%3Af9%3Ad9%3A34&client-id=web_test_client";  // WebSocket服务器地址
+const std::string ws_url = "ws://xrobo-io.qiniuapi.com/v1/ws/";  // WebSocket服务器地址
 const std::string access_token = "test-token";  // 访问令牌
 
 // 设备标识

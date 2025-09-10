@@ -68,8 +68,10 @@ void WebSocketClient::parse_url(const std::string& url) {
 }
 
 void WebSocketClient::SetWsHeaders(const std::map<std::string, std::string>& ws_headers) {
+    std::lock_guard<std::mutex> lock(queue_mutex_);
     ws_headers_ = ws_headers;
 }
+
 
 void WebSocketClient::start() {
     struct lws_context_creation_info info;
@@ -167,6 +169,44 @@ int WebSocketClient::callback_websocket(struct lws *wsi, enum lws_callback_reaso
     }
     
     switch (reason) {
+        case LWS_CALLBACK_CLIENT_APPEND_HANDSHAKE_HEADER:
+            // 添加自定义头部到WebSocket握手请求中
+            if (client) {
+                unsigned char **p = (unsigned char **)in;
+                unsigned char *end = (*p) + len;
+                
+                // 添加线程安全保护
+                std::lock_guard<std::mutex> lock(client->queue_mutex_);
+                
+                for (const auto& header : client->ws_headers_) {
+                    // 验证header名称和值的合法性
+                    if (header.first.empty() || header.second.empty()) {
+                        WARN("Skipping empty header: {} = {}", header.first, header.second);
+                        continue;
+                    }
+                    
+                    // 检查是否包含非法字符
+                    if (header.first.find_first_of("\r\n:") != std::string::npos ||
+                        header.second.find_first_of("\r\n") != std::string::npos) {
+                        WARN("Skipping invalid header: {} = {}", header.first, header.second);
+                        continue;
+                    }
+                    
+                    std::string header_line = header.first + ": " + header.second + "\x0d\x0a";
+                    
+                    // 确保有足够空间，留出安全边界
+                    if (end - (*p) >= (int)header_line.length() + 16) {
+                        memcpy(*p, header_line.c_str(), header_line.length());
+                        (*p) += header_line.length();
+                        INFO("Added WebSocket header: {} = {}", header.first, header.second);
+                    } else {
+                        WARN("Not enough space for header: {} = {}, skipping", header.first, header.second);
+                        // 不返回错误，继续尝试其他头部
+                    }
+                }
+            }
+            break;
+            
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
             INFO("WebSocket connection established");
             if (client && client->on_open_cb_) {
